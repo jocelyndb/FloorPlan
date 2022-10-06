@@ -1,4 +1,5 @@
 package model;
+
 // An object in an architectural plan with a label, a given size and a location on the lot
 public class PlanObject {
     private int width;

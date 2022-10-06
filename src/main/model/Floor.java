@@ -25,11 +25,19 @@ public class Floor extends PlanObject {
     // REQUIRES: width > 0, height > 0, connections must be physically possible and not contain duplicates
     // MODIFIES: this
     // EFFECTS: creates a Room and adds it to this (this.rooms) floor and returns the created room
-    public Room addRoom(int width, int height, int coordinateX, int coordinateY, String label, boolean showLabel, HashSet<Room> connections, String colour) {
+    public Room addRoom(int width,
+                        int height,
+                        int coordinateX,
+                        int coordinateY,
+                        String label,
+                        boolean showLabel,
+                        HashSet<Room> connections,
+                        String colour) {
         Room r = new Room(width, height, coordinateX, coordinateY, label, showLabel, connections, colour);
         rooms.add(r);
         return r;
     }
+
     public int getNumber() {
         return number;
     }

@@ -35,6 +35,7 @@ public class Room extends PlanObject {
     private void addConnection(Room r) {
         connections.add(r);
     }
+
     // REQUIRES: furniture is not within margin of other furniture
     // MODIFIES: this
     // EFFECTS: adds a piece of furniture to the room (this.furniture)
