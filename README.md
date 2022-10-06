@@ -29,7 +29,7 @@ For architects:
 - As a user, I want to be able to add a room to a floor
 - As a user, I want to be able to modify the connections between rooms
 - As a user, I want to be able to modify the minimum margins between furniture
-- As a user, I want to be able to be able to change the lot dimensions
+- As a user, I want to be able to be able to modify the lot dimensions
   (maximum floor size)
 - As a user, I want to be able to print out a floor plan which shows 
   the dimensions of each room and floor formatted for approval from
