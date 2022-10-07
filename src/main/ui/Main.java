@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        new PlannerApp();
 //        Plan myGoodPlan = new Plan("Jacobson Project", 40, 50, 1);
 //        myGoodPlan.addFloor(10,
 //                            10,
