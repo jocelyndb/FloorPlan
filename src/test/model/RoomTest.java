@@ -54,7 +54,7 @@ public class RoomTest {
     }
 
     @Test
-    void testRoom() {
+    void testRoomNoConnections() {
         checkRoomFields(r1,
                 5,
                 4,
@@ -65,8 +65,6 @@ public class RoomTest {
                 new HashSet<>(),
                 "green");
 
-
-
         checkRoomFields(r2,
                 5,
                 4,
@@ -76,6 +74,10 @@ public class RoomTest {
                 false,
                 new HashSet<>(),
                 "eggshell");
+    }
+
+    @Test
+    void testRoomOneNewConnection() {
         HashSet<Room> r3Connections = new HashSet<>();
         r3Connections.add(r1);
         r3Connections.add(r2);
@@ -98,7 +100,34 @@ public class RoomTest {
         assertEquals(setWithR1AndR2, r3.getConnections());
         assertEquals(setWithR3, r1.getConnections());
         assertEquals(setWithR3, r2.getConnections());
+    }
 
+    @Test
+    void testRoomMultipleNewConnections() {
+
+        HashSet<Room> r3Connections = new HashSet<>();
+        r3Connections.add(r1);
+        r3Connections.add(r2);
+
+        Room r3 = new Room(5,
+                4,
+                5,
+                0,
+                "r2",
+                false,
+                r3Connections,
+                "eggshell");
+
+
+        HashSet<Room> setWithR1AndR2 = new HashSet<>();
+        setWithR1AndR2.add(r1);
+        setWithR1AndR2.add(r2);
+        HashSet<Room> setWithR3 = new HashSet<>();
+        setWithR3.add(r3);
+
+        assertEquals(setWithR1AndR2, r3.getConnections());
+        assertEquals(setWithR3, r1.getConnections());
+        assertEquals(setWithR3, r2.getConnections());
         HashSet<Room> r4Connections = new HashSet<>();
         r4Connections.add(r1);
         r4Connections.add(r2);
@@ -120,7 +149,6 @@ public class RoomTest {
         assertEquals(setWithR1AndR2, r3.getConnections());
         assertEquals(setWithR3, r1.getConnections());
         assertEquals(setWithR3, r2.getConnections());
-
     }
 
     private void checkRoomFields(Room r,

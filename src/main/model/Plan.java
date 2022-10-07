@@ -44,7 +44,7 @@ public class Plan {
                 return f;
             }
         }
-        return new Floor(1,1,0,0,"DNE",false,-1);
+        return null;    // Error Handling not yet implemented. Necessary for compiler
     }
 
     public String getName() {
