@@ -55,7 +55,7 @@ public class Room extends PlanObject {
         return colour;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
+//    public void paint(String colour) {
+//        this.colour = colour;
+//    }
 }

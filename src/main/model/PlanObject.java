@@ -1,7 +1,7 @@
 package model;
 
 // An object in an architectural plan with a label, a given size and a location on the lot
-public class PlanObject {
+public abstract class PlanObject {
     private int width;
     private int height;
     private int coordinateX;
@@ -25,17 +25,17 @@ public class PlanObject {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
+//    public void setWidth(int width) {
+//        this.width = width;
+//    }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
+//    public void setHeight(int height) {
+//        this.height = height;
+//    }
 
     public int getCoordinateX() {
         return coordinateX;
@@ -57,15 +57,15 @@ public class PlanObject {
         return label;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+//    public void setLabel(String label) {
+//        this.label = label;
+//    }
 
     public boolean isShowLabel() {
         return showLabel;
     }
 
-    public void setShowLabel(boolean showLabel) {
-        this.showLabel = showLabel;
-    }
+//    public void setShowLabel(boolean showLabel) {
+//        this.showLabel = showLabel;
+//    }
 }

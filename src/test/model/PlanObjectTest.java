@@ -11,14 +11,29 @@ public class PlanObjectTest {
 
     @BeforeEach
     void runBefore() {
-        pO1 = new PlanObject(1,2,3,4,"Big Plan",false);
-        pO2 = new PlanObject(5,6,7,8,"Small Plan",true);
+        pO1 = new Furniture(1,
+                2,
+                3,
+                4,
+                "sofa",
+                false,
+                "nylon",
+                "black");
+        pO2 = new Furniture(
+                5,
+                6,
+                7,
+                8,
+                "lamp",
+                true,
+                "wicker",
+                "brown");
     }
 
     @Test
     void testPlanObject() {
-        checkPlanObjectFields(pO1, 1,2,3,4,"Big Plan",false);
-        checkPlanObjectFields(pO2,5,6,7,8,"Small Plan",true);
+        checkPlanObjectFields(pO1, 1,2,3,4,"sofa",false);
+        checkPlanObjectFields(pO2,5,6,7,8,"lamp",true);
     }
 
     private void checkPlanObjectFields(PlanObject pO, int w, int h, int x, int y, String label, boolean showLabel) {

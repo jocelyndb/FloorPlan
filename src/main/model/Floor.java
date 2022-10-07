@@ -42,10 +42,6 @@ public class Floor extends PlanObject {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
     public HashSet<Room> getRooms() {
         return rooms;
     }

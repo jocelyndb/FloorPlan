@@ -25,15 +25,15 @@ public class Furniture extends PlanObject {
         return material;
     }
 
-    public void setMaterial(String material) {
-        this.material = material;
-    }
+//    public void setMaterial(String material) {
+//        this.material = material;
+//    }
 
     public String getColour() {
         return colour;
     }
 
-    public void setColour(String material) {
-        this.colour = colour;
-    }
+//    public void setColour(String material) {
+//        this.colour = colour;
+//    }
 }
