@@ -66,7 +66,7 @@ public class PlannerApp {
         runPlan(p);
     }
 
-    // MODIFIES: this
+    // MODIFIES: plan
     // EFFECTS: allows the user to edit a plan
     private void runPlan(Plan plan) {
         boolean keepGoing = true;
@@ -135,8 +135,11 @@ public class PlannerApp {
     }
 
     // REQUIRES: Hashset order has not been changed between the set of rooms being printed and command inputted
-    // MODIFIES: this
-    // EFFECTS: processes user command on plan menu
+    // MODIFIES: floors
+    // EFFECTS: processes user command on plan menu,
+    //              if user selects a floor, that floor is opened
+    //              if user selects to create a new floor, that floor is made
+    //              if selection is not valid, they are notified
     private void processPlanMenuCommand(HashSet<Floor> floors, String command) {
         if (hasInt(command)) {
             int floorNumber = Integer.parseInt(command);
@@ -160,7 +163,7 @@ public class PlannerApp {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: floors
     // EFFECTS: facilitates the creation of a new floor
     private void makeFloor(HashSet<Floor> floors) {
         System.out.println("\nNew Floor:");
@@ -176,7 +179,7 @@ public class PlannerApp {
         runFloor(f);
     }
 
-    // MODIFIES: this
+    // MODIFIES: floor
     // EFFECTS: allows the user to edit a floor
     private void runFloor(Floor floor) {
         boolean keepGoing = true;
@@ -216,8 +219,12 @@ public class PlannerApp {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: processes user command on floor menu
+    // REQUIRES: Hashset order has not been changed between the set of rooms being printed and command inputted
+    // MODIFIES: rooms
+    // EFFECTS: processes user command on floor menu,
+    //              if user selects a room, that room is opened
+    //              if user selects to create a new room, that room is made
+    //              if selection is not valid, they are notified
     private void processFloorMenuCommand(HashSet<Room> rooms, String command) {
         if (hasInt(command)) {
             int roomNumber = Integer.parseInt(command);
@@ -241,7 +248,7 @@ public class PlannerApp {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: rooms
     // EFFECTS: facilitates the creation of a new room
     private void makeRoom(HashSet<Room> rooms) {
         System.out.println("\nNew Room:");
@@ -262,7 +269,6 @@ public class PlannerApp {
     // EFFECTS: returns a prompted integer from the user.
     //          Continues to prompt the user for an integer until one is provided
     private int getIntFromUser(String s) {
-//        System.out.print(s);
         String received;
 
         while (true) {
@@ -271,10 +277,11 @@ public class PlannerApp {
             if (hasInt(received)) {
                 return Integer.parseInt(received);
             }
+            System.out.println("This parameter requires an integer value!");
         }
     }
 
-    // EFFECTS: returns an integer from the user with a specific prompt.
+    // EFFECTS: returns a string from the user with a specific prompt.
     private String getStringFromUser(String s) {
         System.out.print(s);
         return input.next();
@@ -301,6 +308,7 @@ public class PlannerApp {
         return connections;
     }
 
+    // MODIFIES: connections
     // EFFECTS: processes user input when selecting connected rooms
     private void processRoomConnections(HashSet<Room> rooms, HashSet<Room> connections, String command) {
         if (hasInt(command)) {
@@ -323,7 +331,7 @@ public class PlannerApp {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: room
     // EFFECTS: allows the user to edit a room
     private void runRoom(Room room) {
         boolean keepGoing = true;
@@ -346,7 +354,13 @@ public class PlannerApp {
         }
     }
 
-    // EFFECTS: processes user command on room menu
+
+    // REQUIRES: Hashset order has not been changed between the set of rooms being printed and command inputted
+    // MODIFIES: furniture
+    // EFFECTS: processes user command on room menu,
+    //              if user selects a piece of furniture, that furniture is removed
+    //              if user selects to create a new piece of furniture, that furniture is made
+    //              if selection is not valid, they are notified
     private void processRoomMenuCommand(HashSet<Furniture> furniture, String command) {
         if (hasInt(command)) {
             int furnitureNumber = Integer.parseInt(command);
@@ -370,7 +384,7 @@ public class PlannerApp {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: furniture
     // EFFECTS: facilitates the creation of a new piece of furniture
     private void makeFurniture(HashSet<Furniture> furniture) {
         System.out.println("\nNew Furniture:");
@@ -422,19 +436,36 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: initializes plans
-    @SuppressWarnings("methodlength")
     private void init() {
         plans = new ArrayList<>();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
 
+        initPlan();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: makes a preexisting plan
+    private void initPlan() {
         Plan p1 = new Plan("Musqueam Project",100,100,2);
         plans.add(p1);
 
+        initFloors(p1);
+    }
+
+    // MODIFIES: p1
+    // EFFECTS: makes a preexisting plan
+    private void initFloors(Plan p1) {
         Floor f1 = p1.addFloor(50,60,10,10,"Ground Floor",true,1);
         Floor f2 = p1.addFloor(50,30,10,10,"Mezzanine",true,2);
         Floor f3 = p1.addFloor(10,20,20,10,"Attic",true,3);
 
+        initRooms(f1, f2, f3);
+    }
+
+    // MODIFIES: f1, f2, f3
+    // EFFECTS: Adds existing rooms to three floors
+    private void initRooms(Floor f1, Floor f2, Floor f3) {
         Room greatRoom = new Room(10,10,0,0,"Great Room", true, new HashSet<>(),"eggshell");
         Room tinyRoom = new Room(5,5,0,0,"Tiny Room", true, new HashSet<>(),"off-white");
         Room drawingRoom = new Room(20,10,0,0,"Drawing Room", true,new HashSet<>(),"ivory");
@@ -447,16 +478,22 @@ public class PlannerApp {
         f2.addRoom(bedroom);
         f3.addRoom(storage);
 
+        initFurniture(greatRoom, drawingRoom, bedroom);
+    }
+
+    // MODIFIES: r1, r2, r3
+    // EFFECTS: adds furniture to the rooms
+    private void initFurniture(Room r1, Room r2, Room r3) {
         Furniture couch = new Furniture(3,6,0,0,"couch",true,"leather","brown");
         Furniture lamp = new Furniture(1,1,0,0,"lamp",true,"metal","white");
         Furniture bedsideTable = new Furniture(3,1,0,0,"bedside table",true,"wood","pine");
         Furniture settee = new Furniture(3,8,0,0,"settee",true,"corduroy","mauve");
 
-        greatRoom.addFurniture(settee);
-        greatRoom.addFurniture(lamp);
-        bedroom.addFurniture(bedsideTable);
-        bedroom.addFurniture(lamp);
-        drawingRoom.addFurniture(couch);
+        r1.addFurniture(settee);
+        r1.addFurniture(lamp);
+        r3.addFurniture(bedsideTable);
+        r3.addFurniture(lamp);
+        r2.addFurniture(couch);
     }
 
     // EFFECTS: returns true if a string only contains an integer
