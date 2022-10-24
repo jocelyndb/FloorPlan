@@ -34,6 +34,9 @@ For architects:
 - As a user, I want to be able to print out a floor plan which shows 
   the dimensions of each room and floor formatted for approval from
   builders
+- As a user, I want to be able to load a planning workroom from a file
+  (Because this is how we're being asked to do data persistence instead of saving individual plans)
+- As a user, I want to be reminded to save my planning workroom when quitting the application
 
 For interior designers:
 - As a user, I want to be able to design coloured rectangular furniture
