@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PlanObjectTest {
+public class PlanObjectTest extends TestFields {
     PlanObject pO1;
     PlanObject pO2;
 
@@ -34,14 +34,5 @@ public class PlanObjectTest {
     void testPlanObject() {
         checkPlanObjectFields(pO1, 1,2,3,4,"sofa",false);
         checkPlanObjectFields(pO2,5,6,7,8,"lamp",true);
-    }
-
-    private void checkPlanObjectFields(PlanObject pO, int w, int h, int x, int y, String label, boolean showLabel) {
-        assertEquals(w, pO.getWidth());
-        assertEquals(h, pO.getHeight());
-        assertEquals(x, pO.getCoordinateX());
-        assertEquals(y, pO.getCoordinateY());
-        assertEquals(label, pO.getLabel());
-        assertEquals(showLabel,pO.isShowLabel());
     }
 }

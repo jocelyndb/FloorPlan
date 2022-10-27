@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Saveable;
+
 import java.util.HashSet;
 
 // An architectural plan of a given size with a name, furniture margins, and floors
-public class Plan {
+public class Plan extends Saveable {
     private String name;
     private int lotWidth;
     private int lotHeight;
@@ -68,4 +72,18 @@ public class Plan {
     }
 
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonFloorArray = new JSONArray();
+        for (Floor floor : floors) {
+            jsonFloorArray.put(floor.toJson());
+        }
+        json.put("name", name);
+        json.put("width", lotWidth);
+        json.put("height", lotHeight);
+        json.put("furniture margins", furnitureMargins);
+        json.put("floors", jsonFloorArray);
+        return json;
+    }
 }

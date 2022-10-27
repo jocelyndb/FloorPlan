@@ -7,7 +7,7 @@ import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RoomTest {
+public class RoomTest extends TestFields {
     Room r1;
     Room r2;
 
@@ -149,26 +149,6 @@ public class RoomTest {
         assertEquals(setWithR1AndR2, r3.getConnections());
         assertEquals(setWithR3, r1.getConnections());
         assertEquals(setWithR3, r2.getConnections());
-    }
-
-    private void checkRoomFields(Room r,
-                                 int w,
-                                 int h,
-                                 int x,
-                                 int y,
-                                 String label,
-                                 boolean showLabel,
-                                 HashSet<Room> connections,
-                                 String c) {
-        assertEquals(w, r.getWidth());
-        assertEquals(h, r.getHeight());
-        assertEquals(x, r.getCoordinateX());
-        assertEquals(y, r.getCoordinateY());
-        assertEquals(label, r.getLabel());
-        assertEquals(showLabel,r.isShowLabel());
-        assertEquals(connections,r.getConnections());
-        assertEquals(c,r.getColour());
-        assertEquals(new HashSet<>(),r.getFurniture());
     }
 
     @Test

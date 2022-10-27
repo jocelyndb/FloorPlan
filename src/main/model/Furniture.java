@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 // A piece of furniture with a label, material and colour as well as a given size and location relative to a room
 public class Furniture extends PlanObject {
     private String material;
@@ -36,4 +39,12 @@ public class Furniture extends PlanObject {
 //    public void setColour(String material) {
 //        this.colour = colour;
 //    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = super.toJson();
+        json.put("material", material);
+        json.put("colour", colour);
+        return json;
+    }
 }

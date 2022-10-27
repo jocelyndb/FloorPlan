@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 
-class PlanTest {
+public class PlanTest extends TestFields {
     Plan p1;
     Plan p2;
     Floor f1;
@@ -74,13 +74,5 @@ class PlanTest {
     @Test
     void testGetFloorNoFloor() {
         assertNull(p1.getFloor(5));
-    }
-
-    private void checkPlanFields(Plan p, String name, int w, int h, int fM, HashSet<Floor> floors) {
-        assertEquals(name,p.getName());
-        assertEquals(w,p.getLotWidth());
-        assertEquals(h,p.getLotHeight());
-        assertEquals(fM,p.getFurnitureMargins());
-        assertEquals(floors,p.getFloors());
     }
 }

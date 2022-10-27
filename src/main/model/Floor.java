@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.math.RoundingMode;
 import java.util.HashSet;
 
 // A floor with a label, given size and location on the lot, and number which contains rooms
@@ -44,5 +48,18 @@ public class Floor extends PlanObject {
 
     public HashSet<Room> getRooms() {
         return rooms;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        // Make a JSONArray of the rooms in the floor
+        JSONArray jsonRoomArray = new JSONArray();
+        for (Room room : rooms) {
+            jsonRoomArray.put(room.toJson());
+        }
+        JSONObject json = super.toJson();
+        json.put("number", number);
+        json.put("rooms", jsonRoomArray);
+        return json;
     }
 }

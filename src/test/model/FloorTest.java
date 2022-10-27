@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
 
-public class FloorTest {
+public class FloorTest extends TestFields {
     Floor f1;
     Floor f2;
     HashSet<Room> rooms;
@@ -52,16 +52,6 @@ public class FloorTest {
     void testFloor() {
         checkFloorFields(f1, 9,10,11,12,"f1",true,3);
         checkFloorFields(f2, 7,6,5,3,"f2",false,1);
-    }
-
-    private void checkFloorFields(Floor f, int w, int h, int x, int y, String label, boolean showLabel, int n) {
-        assertEquals(w, f.getWidth());
-        assertEquals(h, f.getHeight());
-        assertEquals(x, f.getCoordinateX());
-        assertEquals(y, f.getCoordinateY());
-        assertEquals(label, f.getLabel());
-        assertEquals(showLabel,f.isShowLabel());
-        assertEquals(n, f.getNumber());
     }
 
     @Test

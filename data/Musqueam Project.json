@@ -1,0 +1,153 @@
+{
+  "floors": [
+    {
+      "number": 1,
+      "coordinateY": 10,
+      "rooms": [
+        {
+          "coordinateY": 0,
+          "colour": "off-white",
+          "coordinateX": 0,
+          "furniture": [],
+          "width": 5,
+          "label": "Tiny Room",
+          "showLabel": true,
+          "connections": [
+            "Great Room"
+          ],
+          "height": 5
+        },
+        {
+          "coordinateY": 0,
+          "colour": "eggshell",
+          "coordinateX": 0,
+          "furniture": [
+            {
+              "coordinateY": 0,
+              "colour": "mauve",
+              "coordinateX": 0,
+              "material": "corduroy",
+              "width": 3,
+              "label": "settee",
+              "showLabel": true,
+              "height": 8
+            },
+            {
+              "coordinateY": 0,
+              "colour": "white",
+              "coordinateX": 0,
+              "material": "metal",
+              "width": 1,
+              "label": "lamp",
+              "showLabel": true,
+              "height": 1
+            }
+          ],
+          "width": 10,
+          "label": "Great Room",
+          "showLabel": true,
+          "connections": [
+            "Tiny Room"
+          ],
+          "height": 10
+        }
+      ],
+      "coordinateX": 10,
+      "width": 50,
+      "label": "Ground Floor",
+      "showLabel": true,
+      "height": 60
+    },
+    {
+      "number": 2,
+      "coordinateY": 10,
+      "rooms": [
+        {
+          "coordinateY": 0,
+          "colour": "ivory",
+          "coordinateX": 0,
+          "furniture": [
+            {
+              "coordinateY": 0,
+              "colour": "brown",
+              "coordinateX": 0,
+              "material": "leather",
+              "width": 3,
+              "label": "couch",
+              "showLabel": true,
+              "height": 6
+            }
+          ],
+          "width": 20,
+          "label": "Drawing Room",
+          "showLabel": true,
+          "connections": [],
+          "height": 10
+        },
+        {
+          "coordinateY": 0,
+          "colour": "lightest grey",
+          "coordinateX": 0,
+          "furniture": [
+            {
+              "coordinateY": 0,
+              "colour": "pine",
+              "coordinateX": 0,
+              "material": "wood",
+              "width": 3,
+              "label": "bedside table",
+              "showLabel": true,
+              "height": 1
+            },
+            {
+              "coordinateY": 0,
+              "colour": "white",
+              "coordinateX": 0,
+              "material": "metal",
+              "width": 1,
+              "label": "lamp",
+              "showLabel": true,
+              "height": 1
+            }
+          ],
+          "width": 10,
+          "label": "Bedroom",
+          "showLabel": true,
+          "connections": [],
+          "height": 10
+        }
+      ],
+      "coordinateX": 10,
+      "width": 50,
+      "label": "Mezzanine",
+      "showLabel": true,
+      "height": 30
+    },
+    {
+      "number": 3,
+      "coordinateY": 10,
+      "rooms": [
+        {
+          "coordinateY": 0,
+          "colour": "Ash",
+          "coordinateX": 0,
+          "furniture": [],
+          "width": 10,
+          "label": "Storage",
+          "showLabel": true,
+          "connections": [],
+          "height": 10
+        }
+      ],
+      "coordinateX": 20,
+      "width": 10,
+      "label": "Attic",
+      "showLabel": true,
+      "height": 20
+    }
+  ],
+  "name": "Musqueam Project",
+  "width": 100,
+  "furniture margins": 2,
+  "height": 100
+}

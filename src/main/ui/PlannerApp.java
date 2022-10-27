@@ -1,16 +1,24 @@
 package ui;
 
 import model.*;
+import persistence.PlanReader;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 
 // Architectural planner application
 public class PlannerApp {
+    private static final String JSON_DIRECTORY = "./data/";
     private List<Plan> plans;
     private Scanner input;
+    private PlanReader planReader;
 
     // EFFECTS: runs the planner application
     public PlannerApp() {
+        planReader = new PlanReader();
         runPlanner();
     }
 
@@ -81,11 +89,35 @@ public class PlannerApp {
             command = input.next();
             command = command.toLowerCase(Locale.ROOT);
 
-            if (command.equals("q")) {
+            if (command.equals("s")) {
+                handleSave(plan);
+                keepGoing = false;
+            } else if (command.equals("q")) {
                 keepGoing = false;
             } else {
                 processPlanMenuCommand(floors, command);
             }
+        }
+    }
+
+    // EFFECTS: allows the user to save a plan
+    private void handleSave(Plan plan) {
+        String path = JSON_DIRECTORY + plan.getName() + ".json";
+        try {
+            plan.saveNew(path);
+        } catch (FileAlreadyExistsException e) {
+            boolean doSaveOver = getYNFromUser("Would you like to replace the existing "
+                                                + plan.getName()
+                                                + " plan? [y/n]");
+            if (doSaveOver) {
+                try {
+                    plan.saveOver(path);
+                } catch (FileNotFoundException ex) {
+                    System.out.println("There was a problem saving your plan");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("There was a problem saving your plan");
         }
     }
 
@@ -131,7 +163,8 @@ public class PlannerApp {
         }
 
         System.out.println("\n\t[n]: New Floor");
-        System.out.println("\n\t[q]: Exit to Main Menu");
+        System.out.println("\n\t[s]: Save and Exit to Main Menu");
+        System.out.println("\t[q]: Exit to Main Menu without saving. WARNING: You will lose all unsaved progress");
     }
 
     // REQUIRES: Hashset order has not been changed between the set of rooms being printed and command inputted
@@ -281,6 +314,23 @@ public class PlannerApp {
         }
     }
 
+    // EFFECTS: returns a prompted "y" or "n" from user as a boolean, where y: true, n: false
+    //          Continues to prompt the user for a "y" or an "n" until one is provided
+    private Boolean getYNFromUser(String s) {
+        String received;
+
+        while (true) {
+            System.out.print(s);
+            received = input.next();
+            if (received.equalsIgnoreCase("y")) {
+                return true;
+            } else if (received.equalsIgnoreCase("n")) {
+                return false;
+            }
+            System.out.println("Please provide a [y/n] response!");
+        }
+    }
+
     // EFFECTS: returns a string from the user with a specific prompt.
     private String getStringFromUser(String s) {
         System.out.print(s);
@@ -420,6 +470,11 @@ public class PlannerApp {
 
     // EFFECTS: displays a menu of options to the user for creating new and opening existing plans
     private void displayMainMenu() {
+        try {
+            plans = loadPlanFiles();
+        } catch (IOException e) {
+            System.out.println("Unable to load files in " + JSON_DIRECTORY);
+        }
         int selector = 1;
         System.out.println("\n Select from:");
         if (!plans.isEmpty()) {
@@ -435,66 +490,107 @@ public class PlannerApp {
     }
 
     // MODIFIES: this
+    // EFFECTS: adds all valid plans in the data folder to plans
+    private List<Plan> loadPlanFiles() throws IOException {
+        List<Plan> plans = new ArrayList<>();
+        File dataDirectory = new File(JSON_DIRECTORY);
+        File[] filesInDirectory = dataDirectory.listFiles();
+        for (File file : filesInDirectory) {
+            String fileName = file.getPath();
+            String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+            if (fileExtension.equals("json")) {
+                Plan p = planReader.read(fileName);
+                if (!(null == p)) {
+                    plans.add(p);
+                }
+            }
+        }
+        return plans;
+    }
+    /*
+    public class ListOfFiles {
+   public static void main(String args[]) throws IOException {
+      //Creating a File object for directory
+      File directoryPath = new File("D:\ExampleDirectory");
+      //List of all files and directories
+      File filesList[] = directoryPath.listFiles();
+      System.out.println("List of files and directories in the specified directory:");
+      for(File file : filesList) {
+         System.out.println("File name: "+file.getName());
+         System.out.println("File path: "+file.getAbsolutePath());
+         System.out.println("Size :"+file.getTotalSpace());
+         System.out.println(" ");
+      }
+   }
+}
+     */
+
+    // MODIFIES: this
     // EFFECTS: initializes plans
     private void init() {
         plans = new ArrayList<>();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
 
-        initPlan();
+//        initPlan();
+
+
     }
 
-    // MODIFIES: this
-    // EFFECTS: makes a preexisting plan
-    private void initPlan() {
-        Plan p1 = new Plan("Musqueam Project",100,100,2);
-        plans.add(p1);
-
-        initFloors(p1);
-    }
-
-    // MODIFIES: p1
-    // EFFECTS: makes a preexisting plan
-    private void initFloors(Plan p1) {
-        Floor f1 = p1.addFloor(50,60,10,10,"Ground Floor",true,1);
-        Floor f2 = p1.addFloor(50,30,10,10,"Mezzanine",true,2);
-        Floor f3 = p1.addFloor(10,20,20,10,"Attic",true,3);
-
-        initRooms(f1, f2, f3);
-    }
-
-    // MODIFIES: f1, f2, f3
-    // EFFECTS: Adds existing rooms to three floors
-    private void initRooms(Floor f1, Floor f2, Floor f3) {
-        Room greatRoom = new Room(10,10,0,0,"Great Room", true, new HashSet<>(),"eggshell");
-        Room tinyRoom = new Room(5,5,0,0,"Tiny Room", true, new HashSet<>(),"off-white");
-        Room drawingRoom = new Room(20,10,0,0,"Drawing Room", true,new HashSet<>(),"ivory");
-        Room bedroom = new Room(10,10,0,0,"Bedroom", true,new HashSet<>(),"lightest grey");
-        Room storage = new Room(10,10,0,0,"Storage", true,new HashSet<>(),"Ash");
-
-        f1.addRoom(greatRoom);
-        f1.addRoom(tinyRoom);
-        f2.addRoom(drawingRoom);
-        f2.addRoom(bedroom);
-        f3.addRoom(storage);
-
-        initFurniture(greatRoom, drawingRoom, bedroom);
-    }
-
-    // MODIFIES: r1, r2, r3
-    // EFFECTS: adds furniture to the rooms
-    private void initFurniture(Room r1, Room r2, Room r3) {
-        Furniture couch = new Furniture(3,6,0,0,"couch",true,"leather","brown");
-        Furniture lamp = new Furniture(1,1,0,0,"lamp",true,"metal","white");
-        Furniture bedsideTable = new Furniture(3,1,0,0,"bedside table",true,"wood","pine");
-        Furniture settee = new Furniture(3,8,0,0,"settee",true,"corduroy","mauve");
-
-        r1.addFurniture(settee);
-        r1.addFurniture(lamp);
-        r3.addFurniture(bedsideTable);
-        r3.addFurniture(lamp);
-        r2.addFurniture(couch);
-    }
+//    // MODIFIES: this
+//    // EFFECTS: makes a preexisting plan
+//    private void initPlan() {
+//        Plan p1 = new Plan("Musqueam Project",100,100,2);
+//        plans.add(p1);
+//
+//        initFloors(p1);
+//    }
+//
+//    // MODIFIES: p1
+//    // EFFECTS: makes a preexisting plan
+//    private void initFloors(Plan p1) {
+//        Floor f1 = p1.addFloor(50,60,10,10,"Ground Floor",true,1);
+//        Floor f2 = p1.addFloor(50,30,10,10,"Mezzanine",true,2);
+//        Floor f3 = p1.addFloor(10,20,20,10,"Attic",true,3);
+//
+//        initRooms(f1, f2, f3);
+//    }
+//
+//    // MODIFIES: f1, f2, f3
+//    // EFFECTS: Adds existing rooms to three floors
+//    private void initRooms(Floor f1, Floor f2, Floor f3) {
+//        Room greatRoom = new Room(10,10,0,0,"Great Room", true, new HashSet<>(),"eggshell");
+//        Room tinyRoom = new Room(5,5,0,0,"Tiny Room", true, new HashSet<>(),"off-white");
+//        Room drawingRoom = new Room(20,10,0,0,"Drawing Room", true,new HashSet<>(),"ivory");
+//        Room bedroom = new Room(10,10,0,0,"Bedroom", true,new HashSet<>(),"lightest grey");
+//        Room storage = new Room(10,10,0,0,"Storage", true,new HashSet<>(),"Ash");
+//
+//        greatRoom.addConnection(tinyRoom);
+//        tinyRoom.addConnection(greatRoom);
+//
+//        f1.addRoom(greatRoom);
+//        f1.addRoom(tinyRoom);
+//        f2.addRoom(drawingRoom);
+//        f2.addRoom(bedroom);
+//        f3.addRoom(storage);
+//
+//        initFurniture(greatRoom, drawingRoom, bedroom);
+//    }
+//
+//    // MODIFIES: r1, r2, r3
+//    // EFFECTS: adds furniture to the rooms
+//    private void initFurniture(Room r1, Room r2, Room r3) {
+//        Furniture couch = new Furniture(3,6,0,0,"couch",true,"leather","brown");
+//        Furniture lamp = new Furniture(1,1,0,0,"lamp",true,"metal","white");
+//        Furniture bedsideTable = new Furniture(3,1,0,0,"bedside table",true,"wood","pine");
+//        Furniture settee = new Furniture(3,8,0,0,"settee",true,"corduroy","mauve");
+//
+//        r1.addFurniture(settee);
+//        r1.addFurniture(lamp);
+//        r3.addFurniture(bedsideTable);
+//        r3.addFurniture(lamp);
+//        r2.addFurniture(couch);
+//    }
 
     // EFFECTS: returns true if a string only contains an integer
     private static boolean hasInt(String s) {
