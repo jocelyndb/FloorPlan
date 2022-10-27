@@ -35,7 +35,7 @@ For architects:
   the dimensions of each room and floor formatted for approval from
   builders
 - As a user, I want to be able to load a plan from a file
-- As a user, I want to be reminded to save my plan when quitting to the main menu
+- As a user, I want to have an option to save my plan when quitting to the main menu
 
 For interior designers:
 - As a user, I want to be able to design coloured rectangular furniture
