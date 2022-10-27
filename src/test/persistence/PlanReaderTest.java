@@ -27,7 +27,7 @@ public class PlanReaderTest extends TestFields {
         PlanReader reader = new PlanReader();
         try {
             Plan p = reader.read(DIRECTORY + "Empty Plan.json");
-            checkPlanFields(p, "Empty Plan",50,50, 5, new HashSet<Floor>());
+            checkPlanFields(p, "Empty Plan",50,50, 5, new HashSet<>());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
