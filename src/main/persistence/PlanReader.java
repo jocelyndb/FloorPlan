@@ -95,10 +95,10 @@ public class PlanReader {
         String colour = jsonObject.getString("colour");
         Room room = new Room(width, height, coordinateX, coordinateY, label, showLabel, new HashSet<>(), colour);
         JSONArray jsonArray = jsonObject.getJSONArray("connections");
-        for (Object json : jsonArray) {
-            for (Room r : f.getRooms()) {
-//                TODO: figure out what's going on here
-                if (r.getLabel().equals(json.toString())) {
+        for (Room r : f.getRooms()) {
+            for (Object json : jsonArray) {
+                boolean roomMatchesLabel = r.getLabel().equals(json.toString());
+                if (roomMatchesLabel) {
                     room.addConnection(r);
                     r.addConnection(room);
                 }

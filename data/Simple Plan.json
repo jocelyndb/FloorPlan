@@ -33,7 +33,7 @@
                     "width": 15,
                     "label": "r2",
                     "showLabel": true,
-                    "connections": ["r1"],
+                    "connections": [],
                     "height": 20
                 },
                 {

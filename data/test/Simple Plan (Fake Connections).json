@@ -15,28 +15,6 @@
             "coordinateY": 0,
             "rooms": [
                 {
-                    "coordinateY": 20,
-                    "colour": "green",
-                    "coordinateX": 20,
-                    "furniture": [],
-                    "width": 15,
-                    "label": "r3",
-                    "showLabel": true,
-                    "connections": [],
-                    "height": 20
-                },
-                {
-                    "coordinateY": 20,
-                    "colour": "brown",
-                    "coordinateX": 20,
-                    "furniture": [],
-                    "width": 15,
-                    "label": "r2",
-                    "showLabel": true,
-                    "connections": ["r1"],
-                    "height": 20
-                },
-                {
                     "coordinateY": 5,
                     "colour": "blue",
                     "coordinateX": 5,
@@ -53,7 +31,29 @@
                     "width": 20,
                     "label": "r1",
                     "showLabel": true,
-                    "connections": ["r2"],
+                    "connections": ["r2", "fakeRoom"],
+                    "height": 20
+                },
+                {
+                    "coordinateY": 20,
+                    "colour": "brown",
+                    "coordinateX": 20,
+                    "furniture": [],
+                    "width": 15,
+                    "label": "r2",
+                    "showLabel": true,
+                    "connections": ["r1", "fakeRoom"],
+                    "height": 20
+                },
+                {
+                    "coordinateY": 20,
+                    "colour": "green",
+                    "coordinateX": 20,
+                    "furniture": [],
+                    "width": 15,
+                    "label": "r3",
+                    "showLabel": true,
+                    "connections": ["fakeRoom"],
                     "height": 20
                 }
             ],
