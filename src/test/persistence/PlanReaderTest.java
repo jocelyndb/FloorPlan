@@ -9,7 +9,7 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlanReaderTest extends TestFields {
-    final String DIRECTORY = "./data/";
+    final String DIRECTORY = "./data/test/";
 
     @Test
     void testReaderNonExistentFile() {

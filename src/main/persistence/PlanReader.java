@@ -84,7 +84,7 @@ public class PlanReader {
     }
 
     // MODIFIES: f
-    // EFFECTS: parses floor from JSON object and adds it to the floor
+    // EFFECTS: parses room from JSON object and adds it to the floor
     private void addRoom(Floor f, JSONObject jsonObject) {
         int width = jsonObject.getInt("width");
         int height = jsonObject.getInt("height");
@@ -100,6 +100,8 @@ public class PlanReader {
                 if (r.getLabel().equals(json.toString())) {
                     room.addConnection(r);
                     r.addConnection(room);
+                } else {
+                    System.out.println("This line is not reached");
                 }
             }
         }

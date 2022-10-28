@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SaveableTest extends TestFields {
-    final String DIRECTORY = "./data/";
+    final String DIRECTORY = "./data/test/";
     PlanReader reader;
     Plan simplePlan;
     Plan emptyPlan;

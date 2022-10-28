@@ -108,7 +108,7 @@ public class PlannerApp {
         } catch (FileAlreadyExistsException e) {
             boolean doSaveOver = getYNFromUser("Would you like to replace the existing "
                                                 + plan.getName()
-                                                + " plan? [y/n]");
+                                                + " plan? [y/n]: ");
             if (doSaveOver) {
                 try {
                     plan.saveOver(path);
