@@ -31,7 +31,7 @@ public class PlanReader {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(path), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
         }
 
         return contentBuilder.toString();
@@ -97,11 +97,10 @@ public class PlanReader {
         JSONArray jsonArray = jsonObject.getJSONArray("connections");
         for (Object json : jsonArray) {
             for (Room r : f.getRooms()) {
+//                TODO: figure out what's going on here
                 if (r.getLabel().equals(json.toString())) {
                     room.addConnection(r);
                     r.addConnection(room);
-                } else {
-                    System.out.println("This line is not reached");
                 }
             }
         }

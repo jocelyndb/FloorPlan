@@ -37,7 +37,8 @@ public abstract class Saveable implements Writable {
 
     private void writeJson() {
         JSONObject json = this.toJson();
-        writer.print(json);
+        String formattedJson = json.toString(TAB);
+        writer.print(formattedJson);
     }
 
     // EFFECTS: opens writer at the specified path
