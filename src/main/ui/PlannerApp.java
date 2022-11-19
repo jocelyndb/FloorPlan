@@ -528,7 +528,7 @@ public class PlannerApp {
     // MODIFIES: this
     // EFFECTS: initializes plans
     private void init() {
-        plans = new ArrayList<>();
+        planReader = new PlanReader();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
 

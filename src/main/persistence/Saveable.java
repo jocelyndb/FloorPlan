@@ -35,6 +35,7 @@ public abstract class Saveable implements Writable {
         }
     }
 
+    // EFFECTS: saves this as JSON
     private void writeJson() {
         JSONObject json = this.toJson();
         String formattedJson = json.toString(TAB);
