@@ -45,3 +45,25 @@ For interior designers:
   whether I can place it in a given location – it should not be possible to 
   place furniture on top of other furniture or within the margin of other
   furniture
+
+## Instructions for Grader
+- To add multiple floors to a plan, 
+1. Choose a plan from the main menu (I suggest you use the Musqueam plan)
+2. Now an empty architecture planner the size of the lot specified in Musqueam Plan should appear accompanied by a 
+   toolbar which displays the floors as well as options for making, selecting, and deleting floors.
+3. To add a floor to the plan, click the "Make Floor" button on the toolbar
+4. Draw a rectangular floor on the lot by clicking and dragging on the planner
+5. After letting go, you should be prompted for a label for the floor and its number
+6. Now the floor can be selected from the list in the toolbar (click on it in the list and then click select 
+   and it will be displayed along with its number and label
+
+- To delete a floor,
+1. Complete steps 1 and 2 from the previous procedure
+2. Choose a floor by clicking it
+3. Select delete, and the floor will be deleted
+
+- You have already seen the visual component of my application – the display of the floors
+
+- You can save the state of my application by selecting "Quit" on the toolbar and choosing to overwrite the existing
+  file
+- You can reload the state of my application by selecting a saved plan from the main menu

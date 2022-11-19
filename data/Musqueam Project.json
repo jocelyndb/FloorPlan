@@ -1,63 +1,29 @@
 {
     "floors": [
         {
-            "number": 1,
-            "coordinateY": 10,
-            "rooms": [
-                {
-                    "coordinateY": 0,
-                    "colour": "eggshell",
-                    "coordinateX": 0,
-                    "furniture": [
-                        {
-                            "coordinateY": 0,
-                            "colour": "mauve",
-                            "coordinateX": 0,
-                            "material": "corduroy",
-                            "width": 3,
-                            "label": "settee",
-                            "showLabel": true,
-                            "height": 8
-                        },
-                        {
-                            "coordinateY": 0,
-                            "colour": "white",
-                            "coordinateX": 0,
-                            "material": "metal",
-                            "width": 1,
-                            "label": "lamp",
-                            "showLabel": true,
-                            "height": 1
-                        }
-                    ],
-                    "width": 10,
-                    "label": "Great Room",
-                    "showLabel": true,
-                    "connections": ["Tiny Room"],
-                    "height": 10
-                },
-                {
-                    "coordinateY": 0,
-                    "colour": "off-white",
-                    "coordinateX": 0,
-                    "furniture": [],
-                    "width": 5,
-                    "label": "Tiny Room",
-                    "showLabel": true,
-                    "connections": ["Great Room"],
-                    "height": 5
-                }
-            ],
-            "coordinateX": 10,
-            "width": 50,
-            "label": "Ground Floor",
-            "showLabel": true,
-            "height": 60
-        },
-        {
             "number": 2,
             "coordinateY": 10,
             "rooms": [
+                {
+                    "coordinateY": 0,
+                    "colour": "ivory",
+                    "coordinateX": 0,
+                    "furniture": [{
+                        "coordinateY": 0,
+                        "colour": "brown",
+                        "coordinateX": 0,
+                        "material": "leather",
+                        "width": 3,
+                        "label": "couch",
+                        "showLabel": true,
+                        "height": 6
+                    }],
+                    "width": 20,
+                    "label": "Drawing Room",
+                    "showLabel": true,
+                    "connections": [],
+                    "height": 10
+                },
                 {
                     "coordinateY": 0,
                     "colour": "lightest grey",
@@ -89,26 +55,6 @@
                     "showLabel": true,
                     "connections": [],
                     "height": 10
-                },
-                {
-                    "coordinateY": 0,
-                    "colour": "ivory",
-                    "coordinateX": 0,
-                    "furniture": [{
-                        "coordinateY": 0,
-                        "colour": "brown",
-                        "coordinateX": 0,
-                        "material": "leather",
-                        "width": 3,
-                        "label": "couch",
-                        "showLabel": true,
-                        "height": 6
-                    }],
-                    "width": 20,
-                    "label": "Drawing Room",
-                    "showLabel": true,
-                    "connections": [],
-                    "height": 10
                 }
             ],
             "coordinateX": 10,
@@ -136,6 +82,60 @@
             "label": "Attic",
             "showLabel": true,
             "height": 20
+        },
+        {
+            "number": 1,
+            "coordinateY": 10,
+            "rooms": [
+                {
+                    "coordinateY": 0,
+                    "colour": "off-white",
+                    "coordinateX": 0,
+                    "furniture": [],
+                    "width": 5,
+                    "label": "Tiny Room",
+                    "showLabel": true,
+                    "connections": ["Great Room"],
+                    "height": 5
+                },
+                {
+                    "coordinateY": 0,
+                    "colour": "eggshell",
+                    "coordinateX": 0,
+                    "furniture": [
+                        {
+                            "coordinateY": 0,
+                            "colour": "white",
+                            "coordinateX": 0,
+                            "material": "metal",
+                            "width": 1,
+                            "label": "lamp",
+                            "showLabel": true,
+                            "height": 1
+                        },
+                        {
+                            "coordinateY": 0,
+                            "colour": "mauve",
+                            "coordinateX": 0,
+                            "material": "corduroy",
+                            "width": 3,
+                            "label": "settee",
+                            "showLabel": true,
+                            "height": 8
+                        }
+                    ],
+                    "width": 10,
+                    "label": "Great Room",
+                    "showLabel": true,
+                    "connections": ["Tiny Room"],
+                    "height": 10
+                }
+            ],
+            "coordinateX": 10,
+            "width": 50,
+            "label": "Ground Floor",
+            "showLabel": true,
+            "height": 60
         }
     ],
     "name": "Musqueam Project",

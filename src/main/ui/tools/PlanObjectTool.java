@@ -12,13 +12,27 @@ import java.awt.event.MouseEvent;
 
 // Represents a tool for creating PlanObjects in an architectural plan
 public abstract class PlanObjectTool extends Tool {
-    protected Rectangle rectangle;
     protected JPanel planObjectPanel;
+
+    // EFFECTS: returns the current JList being modified
+    public DefaultListModel getJlist() {
+        return jlist;
+    }
+
+    // EFFECTS: sets the JList to be modified
+    public void setJlist(DefaultListModel jlist) {
+        this.jlist = jlist;
+    }
+
+    protected DefaultListModel jlist;
 
     public PlanObjectTool(PlannerGui planner, JComponent parent) {
         super(planner, parent);
-        rectangle = null;
+        planObjectPanel = null;
+        jlist = null;
     }
+
+
 
     // MODIFIES: this
     // EFFECTS: creates new button and adds to parent
@@ -50,22 +64,6 @@ public abstract class PlanObjectTool extends Tool {
 //        planner.addToDrawing(shape);
     }
 
-    protected void paintComponent(Graphics g) {
-        planObjectPanel.paintComponents(g);
-        g.drawString("This is my custom Panel!",10,20);
-        g.setColor(Color.RED);
-        g.fillRect(planObjectPanel.getX(),
-                planObjectPanel.getY(),
-                planObjectPanel.getWidth(),
-                planObjectPanel.getHeight());
-        g.setColor(Color.BLACK);
-        g.drawRect(planObjectPanel.getX(),
-                planObjectPanel.getY(),
-                planObjectPanel.getWidth(),
-                planObjectPanel.getHeight());
-    }
-
-
     // MODIFIES: this
     // EFFECTS: When the mouse is released, instantiates the plan object;
     @Override
@@ -92,13 +90,14 @@ public abstract class PlanObjectTool extends Tool {
     // EFFECTS: Makes a plan object
     protected abstract PlanObject makePlanObject();
 
-    // MODIFIES: this
-    // EFFECTS: Makes and returns a new rectangle
-    private Rectangle makeRectangle(MouseEvent e) {
-        rectangle = new Rectangle(e.getPoint());
-        return rectangle;
-    }
+//    // MODIFIES: this
+//    // EFFECTS: Makes and returns a new rectangle
+//    private Rectangle makeRectangle(MouseEvent e) {
+//        rectangle = new Rectangle(e.getPoint());
+//        return rectangle;
+//    }
 
+    //
     private class PlanObjectToolClickHandler implements ActionListener {
 
         // EFFECTS: sets active tool to the PlanObject tool
@@ -111,7 +110,6 @@ public abstract class PlanObjectTool extends Tool {
 
     // EFFECTS: returns a string from the user with a specific prompt.
     protected String getStringFromUser(String s) {
-        System.out.print(s);
-        return JOptionPane.showInputDialog(planObjectPanel,"Enter Name");
+        return JOptionPane.showInputDialog(planObjectPanel,"Enter " + s + ":");
     }
 }

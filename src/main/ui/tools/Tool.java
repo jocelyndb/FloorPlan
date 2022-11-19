@@ -56,6 +56,11 @@ public abstract class Tool {
         active = false;
     }
 
+    // EFFECTS: returns the tool's button
+    public JButton getButton() {
+        return button;
+    }
+
     // MODIFIES: this
     // EFFECTS:  customizes the button used for this tool
     protected JButton customizeButton(JButton button) {

@@ -8,14 +8,14 @@ import ui.tools.FloorTool;
 import ui.tools.Tool;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +36,8 @@ public class PlannerGui extends JFrame {
     // EFFECTS: runs the planner application
     public PlannerGui() {
         super("Architectural Planner");
+//        Image icon = Toolkit.getDefaultToolkit().getImage("./images/blueprint.png");
+//        this.setIconImage(icon);
         initializeFields();
         displayMainMenu();
     }
@@ -46,12 +48,14 @@ public class PlannerGui extends JFrame {
     private void displayMainMenu() {
         JFrame mainMenu = new JFrame("Select a Plan");
         JPanel menuPanel = new JPanel();
+        mainMenu.setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         try {
             plans = loadPlanFiles();
         } catch (IOException e) {
             System.out.println("Unable to load files in " + JSON_DIRECTORY);
         }
-        mainMenu.setSize(new Dimension(100,100));
+        mainMenu.setSize(new Dimension(300,100));
         DefaultListModel tempListOfPlans = new DefaultListModel();
         for (Plan plan : plans) {
             tempListOfPlans.addElement(plan.getName());
@@ -60,23 +64,29 @@ public class PlannerGui extends JFrame {
         mainMenu.add(menuPanel);
         menuPanel.add(jlistOfPlans);
         mainMenu.setVisible(true);
-        ListSelectionListener listSelectionListener = new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                menuItemSelected(jlistOfPlans.getSelectedIndex());
-            }
-        };
-        jlistOfPlans.addListSelectionListener(listSelectionListener);
+        jlistOfPlans.addListSelectionListener(event -> planSelected(mainMenu, jlistOfPlans.getSelectedIndex()));
     }
 
+    // MODIFIES: this
+    // EFFECTS: opens the selected plan
+    private void planSelected(JFrame mainMenu, int index) {
+        mainMenu.getContentPane().removeAll();
+        mainMenu.repaint();
+        mainMenu.setVisible(false);
+        menuItemSelected(index);
+    }
+
+    // MODIFIES: this
     // EFFECTS: Configures the planner for and loads the newly selected plan at index
     private void menuItemSelected(int index) {
         currentPlan = plans.get(index);
-        this.removeAll();
+        this.getContentPane().removeAll();
+        this.repaint();
         initializeGraphics();
         initializeInteraction();
     }
 
+    // MODIFIES: this
     // EFFECTS: resizes the window for working on the current plan
     private void resizeWindow() {
         Dimension planSize = new Dimension(currentPlan.getLotWidth(), currentPlan.getLotHeight());
@@ -98,9 +108,7 @@ public class PlannerGui extends JFrame {
     // EFFECTS: draws the JFrame window the ArchitecturalPlanner
     //          operates in
     private void initializeGraphics() {
-        makeTools();
         setLayout(new BorderLayout());
-        setDefaultCloseOperation();
         resizeWindow();
         displayFloorMenu();
         setLocationRelativeTo(null);
@@ -124,15 +132,39 @@ public class PlannerGui extends JFrame {
         JList<String> jlistOfFloors = new JList(listOfFloors);
 //        this.add(floorMenu);
         JButton delete = new JButton("Delete");
-//        JButton newFloor = new JButton("New");
         JButton select = new JButton("Select");
-        floorButtons.add(delete);
-//        floorMenu.add(newFloor);
-        floorButtons.add(select);
-//        delete.addActionListener(floorDelete);
-        delete.addActionListener(event -> floorDelete(event, jlistOfFloors.getSelectedValue()));
-        select.addActionListener(event -> selectFloor(event, jlistOfFloors.getSelectedValue()));
+        JButton quit = new JButton("Quit");
 
+        FloorTool floorTool = initializeFloorTool(listOfFloors, floorButtons);
+
+        floorButtons.add(delete);
+        floorButtons.add(select);
+        floorButtons.add(quit);
+
+        floorTool.getButton().addActionListener((event -> makeFloor(floorTool)));
+        delete.addActionListener(event -> floorDelete(event, jlistOfFloors.getSelectedValue(), listOfFloors));
+        select.addActionListener(event -> selectFloor(event, jlistOfFloors.getSelectedValue()));
+        quit.addActionListener(event -> quit(floorMenu));
+
+        initializeFloorMenu(floorMenu, floorList, floorButtons, jlistOfFloors);
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: creates a new floor tool and adds it to tools
+    private FloorTool initializeFloorTool(DefaultListModel listOfFloors, JPanel floorButtons) {
+        FloorTool floorTool = new FloorTool(this, floorButtons);
+        floorTool.setJlist(listOfFloors);
+        tools.add(floorTool);
+        return floorTool;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the floor menu JComponents
+    private void initializeFloorMenu(JFrame floorMenu,
+                                     JPanel floorList,
+                                     JPanel floorButtons,
+                                     JList<String> jlistOfFloors) {
         floorList.add(jlistOfFloors);
         floorMenu.add(floorList, BorderLayout.NORTH);
         floorMenu.add(floorButtons, BorderLayout.SOUTH);
@@ -140,43 +172,109 @@ public class PlannerGui extends JFrame {
     }
 
     // MODIFIES: this
+    // EFFECTS: facilitates quitting the current plan to main meny
+    private void quit(JFrame menu) {
+        handleSave();
+        this.getContentPane().removeAll();
+        this.repaint();
+        this.setVisible(false);
+        menu.getContentPane().removeAll();
+        menu.repaint();
+        menu.setVisible(false);
+        displayMainMenu();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: allows the user to save a plan
+    private void handleSave() {
+        String path = JSON_DIRECTORY + currentPlan.getName() + ".json";
+        try {
+            currentPlan.saveNew(path);
+        } catch (FileAlreadyExistsException e) {
+            boolean doSaveOver = getYNFromUser("Would you like to save over the existing "
+                    + currentPlan.getName()
+                    + " plan?");
+            if (doSaveOver) {
+                try {
+                    currentPlan.saveOver(path);
+                } catch (FileNotFoundException ex) {
+                    System.out.println("There was a problem saving your plan");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("There was a problem saving your plan");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: returns a yes or no response to a question in a dialog box as a boolean
+    private boolean getYNFromUser(String s) {
+        return JOptionPane.showConfirmDialog(null, s, "Confirm", JOptionPane.YES_NO_OPTION)
+                == JOptionPane.YES_OPTION ? true : false;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Sets the active tool to a FloorTool and clears the plan screen
+    private void makeFloor(FloorTool floorTool) {
+        setActiveTool(floorTool);
+        this.getContentPane().removeAll();
+        this.repaint();
+    }
+
+    // MODIFIES: this
     // EFFECTS: opens the selected floor
     private void selectFloor(ActionEvent e, String label) {
         for (Floor floor : currentPlan.getFloors()) {
             if (floor.getLabel().equals(label)) {
-                this.removeAll();
-                renderPlanObject(floor);
+                this.getContentPane().removeAll();
+                this.repaint();
+                renderFloor(floor);
             }
         }
     }
 
     // MODIFIES: this
     // EFFECTS: displays a floor in the architectural planner
-    public void renderPlanObject(PlanObject planObject) {
+    public void renderFloor(Floor floor) {
+        JPanel planObjectEditor = new JPanel();
         JPanel planObjectPanel = new JPanel();
 //        rectangle.setLocation(e.getPoint());
-        planObjectPanel.setLocation(planObject.getCoordinateX(),planObject.getCoordinateY());
-        planObjectPanel.setBounds(planObject.getCoordinateX(),
-                planObject.getCoordinateY(),
-                planObject.getWidth(),
-                planObject.getHeight());
-
+        planObjectPanel.setLocation(floor.getCoordinateX(),floor.getCoordinateY());
+        planObjectPanel.setBounds(floor.getCoordinateX(),
+                floor.getCoordinateY(),
+                floor.getWidth(),
+                floor.getHeight());
+        JLabel planObjectLabel = new JLabel("Floor " + floor.getNumber() + ": " + floor.getLabel());
+        if (floor.isShowLabel()) {
+            planObjectLabel.setVisible(true);
+        } else {
+            planObjectLabel.setVisible(false);
+        }
+        planObjectEditor.add(planObjectLabel);
+        this.add(planObjectPanel);
+        this.add(planObjectEditor);
 //        paintComponent();
         planObjectPanel.setBorder(BorderFactory.createLineBorder(new Color(200,30,50), 3));
-        this.add(planObjectPanel);
+
         planObjectPanel.setVisible(true);
+        planObjectEditor.setVisible(true);
     }
 
     // MODIFIES: this
     // EFFECTS: deletes the selected floor
-    private void floorDelete(ActionEvent e, String label) {
+    private void floorDelete(ActionEvent e, String label, DefaultListModel list) {
+        int count = 0;
         for (Floor floor : currentPlan.getFloors()) {
             if (floor.getLabel().equals(label)) {
                 currentPlan.getFloors().remove(floor);
+                break;
             }
+            count++;
         }
+        list.remove(count);
     }
 
+    // MODIFIES: this
     // EFFECTS: Handles saving and quitting to the main menu
     private void setDefaultCloseOperation() {
     }
@@ -273,23 +371,7 @@ public class PlannerGui extends JFrame {
         activeTool = tool;
     }
 
-    // MODIFIES: this
-    // EFFECTS:  Declares and instantiates all tools
-    private void makeTools() {
-        JFrame toolFrame = new JFrame();
-        JPanel toolArea = new JPanel();
-        toolArea.setSize(new Dimension(50, 30));
-        toolFrame.add(toolArea);
-        toolFrame.setSize(100,100);
-        toolFrame.setVisible(true);
-//        add(toolArea, BorderLayout.SOUTH);
-
-        FloorTool floorTool = new FloorTool(this, toolArea);
-        tools.add(floorTool);
-
-        setActiveTool(floorTool);
-    }
-
+    // Handles mouse input on architecture planner canvas
     private class DrawingMouseListener extends MouseAdapter {
 
         // EFFECTS: Forward mouse pressed event to the active tool

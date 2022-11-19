@@ -5,61 +5,60 @@ import model.Plan;
 import ui.PlannerGui;
 
 import javax.swing.*;
+import java.awt.event.MouseEvent;
 import java.util.HashSet;
 
-// Represents a tool for creating rooms in an architectural plan
+// Represents a tool for creating floors in an architectural plan
 public class FloorTool extends PlanObjectTool {
+    // EFFECTS: creates a tool for making floors
     public FloorTool(PlannerGui planner, JComponent parent) {
         super(planner, parent);
     }
 
+    // EFFECTS: default behaviour does nothing
     @Override
-    protected void addListener() {
+    protected void addListener() {}
 
-    }
-
+    // EFFECTS: returns the label for the floor tool
     @Override
     protected String getLabel() {
         return "Make Floor";
     }
 
+    // MODIFIES: this, planner
+    // EFFECTS: makes a new floor in the current plan
     @Override
     protected Floor makePlanObject() {
         Plan plan = planner.getCurrentPlan();
+        this.deactivate();
         return makeFloor(plan.getFloors());
-//        return plan.addFloor(1,1,1,1,
-//                "TEMPORARY",
-//                true,
-//                1);
+    }
 
+    // Handles mouse presses
+    @Override
+    public void mousePressedInDrawingArea(MouseEvent e) {
+        super.mousePressedInDrawingArea(e);
     }
 
     // MODIFIES: floors
-    // EFFECTS: facilitates the creation of a new floor
+    // EFFECTS: facilitates the creation of a new floor and returns it if its label can be added to the
+    //          jlist for display. Otherwise returns null
     private Floor makeFloor(HashSet<Floor> floors) {
-        System.out.println("\nNew Floor:");
-        String label = getStringFromUser("\tLabel: ");
-//        int number = getIntFromUser("\tNumber: ");
-//        int width = getIntFromUser("\tWidth: ");
-//        int height = getIntFromUser("\tHeight: ");
-//        int coordinateX = getIntFromUser("\tLot Coordinate X: ");
-//        int coordinateY = getIntFromUser("\tLot Coordinate Y: ");
-        int number = Integer.parseInt(getStringFromUser("\tNumber: "));
-        int width = Integer.parseInt(getStringFromUser("\tWidth: "));
-        int height = Integer.parseInt(getStringFromUser("\tHeight: "));
-        int coordinateX = Integer.parseInt(getStringFromUser("\tLot Coordinate X: "));
-        int coordinateY = Integer.parseInt(getStringFromUser("\tLot Coordinate Y: "));
+        if (jlist != null) {
+            String label = getStringFromUser("Label");
+            int number = Integer.parseInt(getStringFromUser("Floor Number"));
 
-        Floor f = new Floor(width, height, coordinateX, coordinateY, label, true, number);
-        floors.add(f);
-//        planObjectPanel.setVisible(false);
-//        planner.setActive
-        return f;
+            Floor f = new Floor(planObjectPanel.getWidth(),
+                    planObjectPanel.getHeight(),
+                    planObjectPanel.getX(),
+                    planObjectPanel.getY(),
+                    label,
+                    true,
+                    number);
+            floors.add(f);
+            jlist.addElement(f.getLabel());
+            return f;
+        }
+        return null;
     }
-
-//
-//    planObjectPanel.getWidth(),
-//            planObjectPanel.getHeight(),
-//            planObjectPanel.getX(),
-//            planObjectPanel.getY()
 }
