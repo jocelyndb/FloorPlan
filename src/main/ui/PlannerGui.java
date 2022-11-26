@@ -21,9 +21,6 @@ import java.util.List;
 
 // Gui for architectural planner application
 public class PlannerGui extends JFrame {
-    public static final int WIDTH = 1000;
-    public static final int HEIGHT = 800;
-
     private static final String JSON_DIRECTORY = "./data/";
     private List<Plan> plans;
 
@@ -36,8 +33,8 @@ public class PlannerGui extends JFrame {
     // EFFECTS: runs the planner application
     public PlannerGui() {
         super("Architectural Planner");
-//        Image icon = Toolkit.getDefaultToolkit().getImage("./images/blueprint.png");
-//        this.setIconImage(icon);
+        ImageIcon icon = new ImageIcon("./src/main/ui/images/blueprint.png");
+        this.setIconImage(icon.getImage());
         initializeFields();
         displayMainMenu();
     }
@@ -260,7 +257,7 @@ public class PlannerGui extends JFrame {
         planObjectEditor.setVisible(true);
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, list
     // EFFECTS: deletes the selected floor
     private void floorDelete(ActionEvent e, String label, DefaultListModel list) {
         int count = 0;
@@ -277,6 +274,7 @@ public class PlannerGui extends JFrame {
     // MODIFIES: this
     // EFFECTS: Handles saving and quitting to the main menu
     private void setDefaultCloseOperation() {
+        // TODO: consider a global saving behaviour
     }
 
     // MODIFIES: this
