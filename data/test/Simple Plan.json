@@ -1,30 +1,9 @@
 {
     "floors": [
         {
-            "number": 2,
-            "coordinateY": 0,
-            "rooms": [],
-            "coordinateX": 0,
-            "width": 40,
-            "label": "2",
-            "showLabel": true,
-            "height": 40
-        },
-        {
             "number": 1,
             "coordinateY": 0,
             "rooms": [
-                {
-                    "coordinateY": 20,
-                    "colour": "green",
-                    "coordinateX": 20,
-                    "furniture": [],
-                    "width": 15,
-                    "label": "r3",
-                    "showLabel": true,
-                    "connections": [],
-                    "height": 20
-                },
                 {
                     "coordinateY": 20,
                     "colour": "brown",
@@ -55,11 +34,32 @@
                     "showLabel": true,
                     "connections": ["r2"],
                     "height": 20
+                },
+                {
+                    "coordinateY": 20,
+                    "colour": "green",
+                    "coordinateX": 20,
+                    "furniture": [],
+                    "width": 15,
+                    "label": "r3",
+                    "showLabel": true,
+                    "connections": [],
+                    "height": 20
                 }
             ],
             "coordinateX": 0,
             "width": 60,
             "label": "1",
+            "showLabel": true,
+            "height": 40
+        },
+        {
+            "number": 2,
+            "coordinateY": 0,
+            "rooms": [],
+            "coordinateX": 0,
+            "width": 40,
+            "label": "2",
             "showLabel": true,
             "height": 40
         }

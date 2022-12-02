@@ -27,7 +27,6 @@ public class PlannerGui extends JFrame {
     private List<Plan> plans;
 
     private Plan currentPlan;
-    private Floor activeFloor;
     private List<Tool> tools;
     private Tool activeTool;
     private PlanReader planReader;
