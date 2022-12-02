@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Floor;
 import model.Plan;
 import model.PlanObject;
@@ -30,11 +32,14 @@ public class PlannerGui extends JFrame {
     private Tool activeTool;
     private PlanReader planReader;
 
+    EventLog el;
+
     // EFFECTS: runs the planner application
     public PlannerGui() {
         super("Architectural Planner");
         ImageIcon icon = new ImageIcon("./src/main/ui/images/blueprint.png");
         this.setIconImage(icon.getImage());
+        el = EventLog.getInstance();
         initializeFields();
         displayMainMenu();
     }
@@ -70,6 +75,7 @@ public class PlannerGui extends JFrame {
         mainMenu.getContentPane().removeAll();
         mainMenu.repaint();
         mainMenu.setVisible(false);
+        el.clear();
         menuItemSelected(index);
     }
 
@@ -178,7 +184,15 @@ public class PlannerGui extends JFrame {
         menu.getContentPane().removeAll();
         menu.repaint();
         menu.setVisible(false);
+        printLog();
         displayMainMenu();
+    }
+
+    // EFFECTS: prints the
+    private void printLog() {
+        for (Event event : el) {
+            System.out.println(event.toString());
+        }
     }
 
     // MODIFIES: this

@@ -40,6 +40,7 @@ public class Furniture extends PlanObject {
 //        this.colour = colour;
 //    }
 
+    // EFFECTS: converts the furniture to json
     @Override
     public JSONObject toJson() {
         JSONObject json = super.toJson();

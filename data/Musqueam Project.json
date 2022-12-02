@@ -64,24 +64,14 @@
             "height": 30
         },
         {
-            "number": 3,
-            "coordinateY": 10,
-            "rooms": [{
-                "coordinateY": 0,
-                "colour": "Ash",
-                "coordinateX": 0,
-                "furniture": [],
-                "width": 10,
-                "label": "Storage",
-                "showLabel": true,
-                "connections": [],
-                "height": 10
-            }],
-            "coordinateX": 20,
-            "width": 10,
-            "label": "Attic",
+            "number": 45,
+            "coordinateY": 154,
+            "rooms": [],
+            "coordinateX": 210,
+            "width": 234,
+            "label": "TEST NEW FLOOR",
             "showLabel": true,
-            "height": 20
+            "height": 236
         },
         {
             "number": 1,
@@ -105,16 +95,6 @@
                     "furniture": [
                         {
                             "coordinateY": 0,
-                            "colour": "white",
-                            "coordinateX": 0,
-                            "material": "metal",
-                            "width": 1,
-                            "label": "lamp",
-                            "showLabel": true,
-                            "height": 1
-                        },
-                        {
-                            "coordinateY": 0,
                             "colour": "mauve",
                             "coordinateX": 0,
                             "material": "corduroy",
@@ -122,6 +102,16 @@
                             "label": "settee",
                             "showLabel": true,
                             "height": 8
+                        },
+                        {
+                            "coordinateY": 0,
+                            "colour": "white",
+                            "coordinateX": 0,
+                            "material": "metal",
+                            "width": 1,
+                            "label": "lamp",
+                            "showLabel": true,
+                            "height": 1
                         }
                     ],
                     "width": 10,
@@ -136,6 +126,26 @@
             "label": "Ground Floor",
             "showLabel": true,
             "height": 60
+        },
+        {
+            "number": 3,
+            "coordinateY": 10,
+            "rooms": [{
+                "coordinateY": 0,
+                "colour": "Ash",
+                "coordinateX": 0,
+                "furniture": [],
+                "width": 10,
+                "label": "Storage",
+                "showLabel": true,
+                "connections": [],
+                "height": 10
+            }],
+            "coordinateX": 20,
+            "width": 10,
+            "label": "Attic",
+            "showLabel": true,
+            "height": 20
         }
     ],
     "name": "Musqueam Project",

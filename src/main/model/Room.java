@@ -45,6 +45,7 @@ public class Room extends PlanObject {
     // EFFECTS: adds a piece of furniture to the room (this.furniture)
     public void addFurniture(Furniture f) {
         furniture.add(f);
+        planEvent(f.getLabel(), this.getLabel());
     }
 
     public HashSet<Furniture> getFurniture() {
@@ -59,6 +60,7 @@ public class Room extends PlanObject {
         return colour;
     }
 
+    // EFFECTS: converts the room to json
     @Override
     public JSONObject toJson() {
         // Make a JSONArray of the connected rooms labels

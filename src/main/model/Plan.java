@@ -37,7 +37,15 @@ public class Plan extends Saveable {
                     int number) {
         Floor f = new Floor(width, height, coordinateX, coordinateY, label, showLabel, number);
         floors.add(f);
+        logFloor(label);
         return f;
+    }
+
+    // REQUIRES: floorName != null
+    // MODIFIES: EventLog
+    // EFFECTS: Logs the floor being added to the plan
+    protected void logFloor(String floorName) {
+        EventLog.getInstance().logEvent(new Event(floorName + " added to " + name));
     }
 
     // REQUIRES: Floor number n must be in listOfFloor
@@ -71,7 +79,7 @@ public class Plan extends Saveable {
         return floors;
     }
 
-
+    // EFFECTS: converts the plan to json
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

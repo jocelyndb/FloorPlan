@@ -17,6 +17,7 @@ public class Floor extends PlanObject {
         super(width, height, coordinateX, coordinateY, label, showLabel);
         this.number = number;
         this.rooms = new HashSet<>();
+        super.planEvent("Floor (" + number + "): " + label, "the plan");
     }
 
     // REQUIRES: Room is not already in floor
@@ -39,6 +40,7 @@ public class Floor extends PlanObject {
                         String colour) {
         Room r = new Room(width, height, coordinateX, coordinateY, label, showLabel, connections, colour);
         rooms.add(r);
+        planEvent(label, this.getLabel());
         return r;
     }
 
@@ -50,6 +52,7 @@ public class Floor extends PlanObject {
         return rooms;
     }
 
+    // EFFECTS: converts the floor to json
     @Override
     public JSONObject toJson() {
         // Make a JSONArray of the rooms in the floor
