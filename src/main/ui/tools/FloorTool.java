@@ -31,7 +31,7 @@ public class FloorTool extends PlanObjectTool {
     protected Floor makePlanObject() {
         Plan plan = planner.getCurrentPlan();
         this.deactivate();
-        return makeFloor(plan.getFloors());
+        return makeFloor(plan);
     }
 
     // Handles mouse presses
@@ -43,19 +43,17 @@ public class FloorTool extends PlanObjectTool {
     // MODIFIES: floors
     // EFFECTS: facilitates the creation of a new floor and returns it if its label can be added to the
     //          jlist for display. Otherwise returns null
-    private Floor makeFloor(HashSet<Floor> floors) {
+    private Floor makeFloor(Plan p) {
         if (jlist != null) {
             String label = getStringFromUser("Label");
             int number = Integer.parseInt(getStringFromUser("Floor Number"));
-
-            Floor f = new Floor(planObjectPanel.getWidth(),
+            Floor f = p.addFloor(planObjectPanel.getWidth(),
                     planObjectPanel.getHeight(),
                     planObjectPanel.getX(),
                     planObjectPanel.getY(),
                     label,
                     true,
                     number);
-            floors.add(f);
             jlist.addElement(f.getLabel());
             return f;
         }

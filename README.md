@@ -67,3 +67,39 @@ For interior designers:
 - You can save the state of my application by selecting "Quit" on the toolbar and choosing to overwrite the existing
   file
 - You can reload the state of my application by selecting a saved plan from the main menu
+
+## Phase 4: Task 2
+Sample event log:
+```
+Fri Dec 02 03:19:27 PST 2022
+Event log cleared.
+Fri Dec 02 03:19:37 PST 2022
+Floor (1): Lobby added to Musqueam Project
+Fri Dec 02 03:19:43 PST 2022
+Floor (2): Second Floor added to Musqueam Project
+Fri Dec 02 03:19:50 PST 2022
+Floor (-1): P1 added to Musqueam Project
+Fri Dec 02 03:19:56 PST 2022
+Floor (2): P2 added to Musqueam Project
+Fri Dec 02 03:20:00 PST 2022
+Floor (2): P2 removed from Musqueam Project
+Fri Dec 02 03:20:06 PST 2022
+Floor (-1): P1 removed from Musqueam Project
+```
+
+## Phase 4: Task 3
+Given time to refactor my code, I would implement the Composite
+design pattern. I have a needlessly complex hierarchy of 
+objects that can go into a plan that would be far better served
+with a composite design. This would remove a lot of duplicated
+code and allow for the easy addition of new features such as
+additional plan object types with relative ease. Additionally,
+it could repair the potentially needless and confusing
+distinction between a plan (which contains floors and is 
+not a plan object) and plan object such as a floor or a room. A
+revised design might replace PlanObject and Plan with two 
+abstract classes: Container and Standalone, where containers could hold
+other containers and standalones while standalones would be
+standalone plan objects. Both of these would extend a Component 
+class, allowing for easy iteration and interaction with common
+features.

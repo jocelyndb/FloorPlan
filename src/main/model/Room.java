@@ -45,7 +45,7 @@ public class Room extends PlanObject {
     // EFFECTS: adds a piece of furniture to the room (this.furniture)
     public void addFurniture(Furniture f) {
         furniture.add(f);
-        planEvent(f.getLabel(), this.getLabel());
+        planEvent(f.getLabel(), this.getLabel(), "added to");
     }
 
     public HashSet<Furniture> getFurniture() {

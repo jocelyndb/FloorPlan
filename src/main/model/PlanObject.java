@@ -75,8 +75,8 @@ public abstract class PlanObject implements Writable {
     // REQUIRES: child != null && parent != null
     // MODIFIES: EventLog
     // EFFECTS: Logs the child being added to the parent
-    protected void planEvent(String child, String parent) {
-        EventLog.getInstance().logEvent(new Event(child + " added to " + parent));
+    protected void planEvent(String child, String parent, String action) {
+        EventLog.getInstance().logEvent(new Event(child + " " + action + " " + parent));
     }
 
     // EFFECTS: converts the plan object to json

@@ -277,7 +277,7 @@ public class PlannerGui extends JFrame {
         int count = 0;
         for (Floor floor : currentPlan.getFloors()) {
             if (floor.getLabel().equals(label)) {
-                currentPlan.getFloors().remove(floor);
+                currentPlan.removeFloor(floor);
                 break;
             }
             count++;

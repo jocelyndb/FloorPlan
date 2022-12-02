@@ -37,15 +37,16 @@ public class Plan extends Saveable {
                     int number) {
         Floor f = new Floor(width, height, coordinateX, coordinateY, label, showLabel, number);
         floors.add(f);
-        logFloor(label);
+        logFloor(f, "added to");
         return f;
     }
 
     // REQUIRES: floorName != null
     // MODIFIES: EventLog
-    // EFFECTS: Logs the floor being added to the plan
-    protected void logFloor(String floorName) {
-        EventLog.getInstance().logEvent(new Event(floorName + " added to " + name));
+    // EFFECTS: Logs the action of a floor to in relation to the plan
+    protected void logFloor(Floor f, String action) {
+        EventLog.getInstance().logEvent(new Event("Floor (" + f.getNumber()
+                                                    + "): " + f.getLabel() + " " + action + " " + name));
     }
 
     // REQUIRES: Floor number n must be in listOfFloor
@@ -57,6 +58,14 @@ public class Plan extends Saveable {
             }
         }
         return null;    // Error Handling not yet implemented. Necessary for compiler
+    }
+
+    // REQUIRES: f contained in floors
+    // MODIFIES: floors
+    // EFFECTS: removes f from floors
+    public void removeFloor(Floor f) {
+        floors.remove(f);
+        logFloor(f, "removed from");
     }
 
     public String getName() {

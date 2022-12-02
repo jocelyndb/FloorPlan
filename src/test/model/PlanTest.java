@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class PlanTest extends TestFields {
@@ -74,5 +73,13 @@ public class PlanTest extends TestFields {
     @Test
     void testGetFloorNoFloor() {
         assertNull(p1.getFloor(5));
+    }
+
+    @Test
+    void testRemoveFloor() {
+        Floor f3 = p1.addFloor(3,4,0,1,"f1",false,1);
+        assertTrue(p1.getFloors().contains(f3));
+        p1.removeFloor(f3);
+        assertFalse(p1.getFloors().contains(f3));
     }
 }

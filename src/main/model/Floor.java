@@ -17,7 +17,6 @@ public class Floor extends PlanObject {
         super(width, height, coordinateX, coordinateY, label, showLabel);
         this.number = number;
         this.rooms = new HashSet<>();
-        super.planEvent("Floor (" + number + "): " + label, "the plan");
     }
 
     // REQUIRES: Room is not already in floor
@@ -40,7 +39,7 @@ public class Floor extends PlanObject {
                         String colour) {
         Room r = new Room(width, height, coordinateX, coordinateY, label, showLabel, connections, colour);
         rooms.add(r);
-        planEvent(label, this.getLabel());
+        planEvent(label, this.getLabel(), "added to");
         return r;
     }
 
