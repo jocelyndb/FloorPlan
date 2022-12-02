@@ -88,7 +88,7 @@ Floor (-1): P1 removed from Musqueam Project
 ```
 
 ## Phase 4: Task 3
-![UML Class Diagram](uml.jpg)
+![UML Class Diagram](UML_Design_Diagram.jpg)
 Given time to refactor my code, I would implement the Composite
 design pattern. I have a needlessly complex hierarchy of 
 objects that can go into a plan that would be far better served
