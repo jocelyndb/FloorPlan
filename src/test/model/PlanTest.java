@@ -15,6 +15,8 @@ public class PlanTest extends TestFields {
     Floor f2;
     private HashSet<Floor> floors;
 
+    EventLog el;
+
     @BeforeEach
     void runBefore() {
         p1 = new Plan("Cool Plan", 50,60,1);
@@ -34,6 +36,9 @@ public class PlanTest extends TestFields {
                 false,
                 1);
         floors = new HashSet<>();
+
+        el = EventLog.getInstance();
+        el.clear();
     }
 
     @Test
@@ -81,5 +86,23 @@ public class PlanTest extends TestFields {
         assertTrue(p1.getFloors().contains(f3));
         p1.removeFloor(f3);
         assertFalse(p1.getFloors().contains(f3));
+    }
+
+    @Test
+    void testLogFloor() {
+        p1.addFloor(5,5,5,5,"testFloor",true,1);
+        int count = 0;
+        for (Event e : el) {
+            if (count == 0) {
+                assertEquals("Event log cleared.", e.getDescription());
+            }
+            if (count == 1) {
+                assertEquals("Floor (1): testFloor added to Cool Plan", e.getDescription());
+            }
+            if (count > 1) {
+                fail();
+            }
+            count++;
+        }
     }
 }
